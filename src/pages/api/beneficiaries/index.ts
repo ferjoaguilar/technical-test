@@ -34,7 +34,7 @@ export default async(req: NextApiRequest, res: NextApiResponse) => {
         }
         const payload = jwt.verify(token, process.env.SECRET as string)
 
-        const [rows, fields] = await connection.execute('SELECT * FROM beneficiaries')
+        const [rows, fields] = await connection.execute('SELECT beneficiaries.fullname, beneficiaries.hampers, beneficiaries.age, beneficiaries.gender, beneficiaries.delivered_at, users.username FROM beneficiaries INNER JOIN users ON beneficiaries.id_user=users.id_user')
         return res.status(200).json({message: 'Beneficiaries list', rows})
       } catch (error) {
         return res.status(400).json({message: error}) 

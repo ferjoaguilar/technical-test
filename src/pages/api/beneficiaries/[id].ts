@@ -25,7 +25,7 @@ export default async(req: NextApiRequest, res: NextApiResponse) => {
         if (!token) {
           return res.status(401).json({message: 'Not autenticated'})
         }
-        const [rows, fields] = await connection.execute('SELECT * FROM beneficiaries WHERE id_beneficiary = ?', [id])
+        const [rows, fields] = await connection.execute('SELECT beneficiaries.fullname, beneficiaries.hampers, beneficiaries.age, beneficiaries.gender, beneficiaries.delivered_at, users.username FROM beneficiaries INNER JOIN users ON beneficiaries.id_user=users.id_user WHERE id_beneficiary = ?', [id])
         return res.status(200).json({message: 'Get one beneficiarie', rows})
       } catch (error) {
         return res.status(400).json({message: error}) 
