@@ -13,7 +13,7 @@ const signin = () => {
 
   const router = useRouter()
   const {register, handleSubmit, formState: {errors}} = useForm<NewUser>()
-  const [error, setError] = useState<string>('')
+  const [errorApi, setErrorApi] = useState<string>('')
 
 
   const onSubmit = async(data:NewUser) => {
@@ -27,7 +27,7 @@ const signin = () => {
       })
       router.push('/')
     } catch (error) {
-      setError(error);
+      setErrorApi(errorApi);
     }
   }
 
@@ -36,7 +36,7 @@ const signin = () => {
       <Navbar />
       <section className="container">
         {
-          error?
+          errorApi?
           <div className="alert alert-danger" role="alert">
             Somithing error in API
           </div>
