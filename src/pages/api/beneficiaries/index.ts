@@ -15,9 +15,15 @@ export default async(req: NextApiRequest, res: NextApiResponse) => {
         }
         const payload = jwt.verify(token, process.env.SECRET as string)
         
+        const [validate, fieldsValid]:any = await connection.execute('SELECT * FROM beneficiaries')
+        if(validate.length == 10) {
+          return res.status(400).json({message: 'The maximum of hampers is 10'})
+        }
+        
         if(body.age < 18){
           return res.status(400).json({message: 'You have to be over 18 years old'})
         }
+
 
         const [rows, fields] = await connection.query
         ('INSERT INTO beneficiaries(fullname, hampers, id_user, age, gender) VALUES (?,?,?,?,?)',
