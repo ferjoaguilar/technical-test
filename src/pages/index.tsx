@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import {useForm} from 'react-hook-form'
+import { setCookies } from 'cookies-next';
 import { useRouter } from 'next/router'
 import Navbar from '../components/Navbar'
 
@@ -26,8 +27,8 @@ const HompePage = () => {
         body: JSON.stringify(data)
       })
       const userData = await res.json()
-      localStorage.setItem('token', userData.token)
       router.push('/admin')
+      setCookies('token', userData.token);
     } catch (error) {
       setErrorApi(errorApi);
     }
