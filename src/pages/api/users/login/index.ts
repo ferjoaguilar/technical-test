@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import connection from '../../../../utils/database'
+import { OkPacket } from 'mysql2'
 
 
 export default async(req: NextApiRequest, res: NextApiResponse) => {
@@ -11,7 +12,7 @@ export default async(req: NextApiRequest, res: NextApiResponse) => {
     case 'POST':
       try {
         const [rows, fields] = await connection.execute('SELECT * FROM users WHERE username = ?', [body.username])
-        if(rows.length == 0) {
+        if(!rows[0]) {
           return res.status(400).json({message: 'Username not found'});  
         }
         if(!bcrypt.compareSync(body.password, rows[0].password)) {
