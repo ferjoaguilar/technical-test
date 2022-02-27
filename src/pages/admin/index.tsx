@@ -86,7 +86,7 @@ const Admin = ({token, decoded}: InferGetServerSidePropsType<typeof getServerSid
              dataTable.map((item, index) => {
               return(
                 <tr key={index}>
-                  <th scope="row">{index}</th>
+                  <th scope="row">{index+1}</th>
                   <td>{item.fullname}</td>
                   <td>{item.hampers}</td>
                   <td>{item.username}</td>

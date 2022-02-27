@@ -1,4 +1,5 @@
 import Link from 'next/link' 
+import { removeCookies } from 'cookies-next'
 import { useRouter } from 'next/router'
 
 const NavbarAdmin = () => {
@@ -6,7 +7,7 @@ const NavbarAdmin = () => {
   const router = useRouter()
 
   const closeSession = () => {
-    localStorage.removeItem('token')
+    removeCookies('token')
     router.push('/')
   }
   return (

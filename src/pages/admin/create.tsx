@@ -3,9 +3,9 @@ import { getCookie } from 'cookies-next'
 import jwt from 'jsonwebtoken'
 import {useForm} from 'react-hook-form'
 import { useRouter } from 'next/router'
-import NavbarAdmin from '../../../components/NavbarAdmin'
 import { InferGetServerSidePropsType } from 'next'
-import { useEffect, useState } from 'react'
+import NavbarAdmin from '../../components/NavbarAdmin'
+import { useState } from 'react'
 
 export const getServerSideProps = (context) => {
   const { req, res } = context
@@ -30,44 +30,25 @@ export const getServerSideProps = (context) => {
   return{props: { token, decoded }}
 }
 
-type Update = { 
+type Create = {
   fullname:string,
-  hampers:boolean,
-  age:number,
-  gender:string
-}
-
-type DataTableType = {
-  fullname:string,
-  hampers: number,
+  hampers: boolean,
+  id_user?: number,
   age: number,
   gender: string
 }
 
-const Update = ({token, decoded}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  
+
+const create = ({token, decoded}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+
   const router = useRouter()
-  const {register, handleSubmit, formState: {errors}} = useForm<Update>()
+  const {register, handleSubmit, formState: {errors}} = useForm<Create>()
   const [errorApi, setErrorApi] = useState<string>('')
-  const [dataTable, setDataTable] = useState<DataTableType>()
 
-  useEffect(() => {
-    const getBeneficiary = async() => {
-      const res = await fetch(`${process.env.BASE_URL}/beneficiaries/${router.query.id}`,{
-        method: 'GET',
-        headers: { 'Content-type': 'application/json', 'authorization':token}
-      })
-      const data = await res.json()
-      setDataTable(data.rows[0])
-    }
-    getBeneficiary()
-  }, [])
-
-
-  const onSubmit = async(data:Update) => {
+  const onSubmit = async(data:Create) => {
     try {
-      const res = await fetch(`${process.env.BASE_URL}/beneficiaries/${router.query.id}`,{
-        method: 'PUT',
+      const res = await fetch(`${process.env.BASE_URL}/beneficiaries`,{
+        method: 'POST',
         headers: { 'Content-type': 'application/json', 'authorization':token},
         body: JSON.stringify(data)
       })
@@ -77,7 +58,7 @@ const Update = ({token, decoded}: InferGetServerSidePropsType<typeof getServerSi
       setErrorApi(error)
     }
   }
-  
+
   return (
     <>
       <NavbarAdmin />
@@ -102,7 +83,6 @@ const Update = ({token, decoded}: InferGetServerSidePropsType<typeof getServerSi
                   className="form-control" 
                   id="fullname" 
                   {...register('fullname', {required: true, minLength: 5, maxLength: 75})}
-                  defaultValue={dataTable?.fullname}
                   placeholder="Escribe tu nombre de usuario"
                 />
                   {
@@ -117,14 +97,15 @@ const Update = ({token, decoded}: InferGetServerSidePropsType<typeof getServerSi
 
               <div className="mb-3">
                 <label htmlFor="hampers" className="form-label">Canasta</label>
-                <input 
-                  type="text" 
-                  className="form-control" 
+                <select 
                   id="hampers" 
-                  {...register('hampers')}
-                  value={dataTable?.hampers? 'Entregado': 'No entregado'}
-                  disabled
-                />
+                  className="form-select"
+                  defaultValue={''}
+                  {...register('hampers', {required: true})}
+                >
+                  <option value="0">Entregado</option>
+                  <option value="1">No Entregado</option>
+                </select>
               </div>
 
               <div className="mb-3">
@@ -134,7 +115,6 @@ const Update = ({token, decoded}: InferGetServerSidePropsType<typeof getServerSi
                   className="form-control" 
                   id="age" 
                   {...register('age', {required: true, minLength: 1, maxLength: 2, min:18})}
-                  defaultValue={dataTable?.age}
                 />
                   {
                     errors.age?.type === 'required' &&
@@ -154,7 +134,6 @@ const Update = ({token, decoded}: InferGetServerSidePropsType<typeof getServerSi
                 <select 
                   id="meeting" 
                   className="form-select"
-                  defaultValue={dataTable?.gender}
                   {...register('gender', {required: true})}
                 >
                   
@@ -164,16 +143,15 @@ const Update = ({token, decoded}: InferGetServerSidePropsType<typeof getServerSi
               </div>
               
               <div className="mb-3">
-              <button type="submit" className="btn btn-info">Actualizar registro</button>
+              <button type="submit" className="btn btn-info">Agregar registro</button>
               </div>
               
             </form>
           </div>
         </div>
       </section>
-
     </>
   )
 }
 
-export default Update
+export default create
