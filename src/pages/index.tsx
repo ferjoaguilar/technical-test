@@ -27,8 +27,11 @@ const HompePage = () => {
         body: JSON.stringify(data)
       })
       const userData = await res.json()
+      if(userData.message == 'Username not found'){
+        setErrorApi(userData.message)
+      }
       router.push('/admin')
-      setCookies('token', userData.token);
+      setCookies('token', userData.token)
     } catch (error) {
       setErrorApi(errorApi);
     }
@@ -41,8 +44,8 @@ const HompePage = () => {
        <section className="container">
         {
           errorApi?
-          <div className="alert alert-danger" role="alert">
-            Somithing error in API
+          <div className="alert alert-danger mt-4" role="alert">
+            {errorApi}
           </div>
           :
           ""
