@@ -88,7 +88,7 @@ const Admin = ({token, decoded}: InferGetServerSidePropsType<typeof getServerSid
                 <tr key={index}>
                   <th scope="row">{index+1}</th>
                   <td>{item.fullname}</td>
-                  <td>{item.hampers}</td>
+                  <td>{item.hampers?"No Entregada":"Entregada"}</td>
                   <td>{item.username}</td>
                   <td>{item.age}</td>
                   <td>{item.gender}</td>

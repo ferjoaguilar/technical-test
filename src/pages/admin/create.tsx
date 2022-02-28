@@ -70,7 +70,7 @@ const create = ({token, decoded}: InferGetServerSidePropsType<typeof getServerSi
         {
           errorApi?
           <div className="alert alert-danger" role="alert">
-            Somithing error in API
+            {errorApi}
           </div>
           :
           ""

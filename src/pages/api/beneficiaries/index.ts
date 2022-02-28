@@ -16,7 +16,7 @@ export default async(req: NextApiRequest, res: NextApiResponse) => {
         const payload = jwt.verify(token, process.env.SECRET as string)
         
         const [validate, fieldsValid]:any = await connection.execute('SELECT * FROM beneficiaries')
-        if(validate.length >2) {
+        if(validate.length >=2) {
           return res.status(400).json({message: 'El maximo de canastas es de 10'})
         }
         

@@ -1,5 +1,5 @@
 module.exports = {
   env: {
-    BASE_URL: 'https://technical-test-six.vercel.app/api'
+    BASE_URL: 'http://localhost:3000/api'
   },
 }
