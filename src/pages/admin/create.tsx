@@ -53,6 +53,10 @@ const create = ({token, decoded}: InferGetServerSidePropsType<typeof getServerSi
         body: JSON.stringify(data)
       })
       const result = await res.json()
+      console.log(result)
+      if(result.message === 'El maximo de canastas es de 10'){
+        return setErrorApi(result.message)
+      }
       router.push('/admin')
     } catch (error) {
       setErrorApi(error)
