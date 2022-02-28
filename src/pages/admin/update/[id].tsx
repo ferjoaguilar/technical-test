@@ -122,7 +122,7 @@ const Update = ({token, decoded}: InferGetServerSidePropsType<typeof getServerSi
                   className="form-control" 
                   id="hampers" 
                   {...register('hampers')}
-                  value={dataTable?.hampers? 'Entregado': 'No entregado'}
+                  value={dataTable?.hampers? 'No entregado': 'Entregado'}
                   disabled
                 />
               </div>
