@@ -134,7 +134,7 @@ const create = ({token, decoded}: InferGetServerSidePropsType<typeof getServerSi
 
 
               <div className="mb-3">
-                <label htmlFor="gender" className="form-label">Gender</label>
+                <label htmlFor="gender" className="form-label">Genero</label>
                 <select 
                   id="meeting" 
                   className="form-select"
