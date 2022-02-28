@@ -107,8 +107,8 @@ const create = ({token, decoded}: InferGetServerSidePropsType<typeof getServerSi
                   defaultValue={''}
                   {...register('hampers', {required: true})}
                 >
-                  <option value="0">Entregado</option>
-                  <option value="1">No Entregado</option>
+                  <option value="1">Entregado</option>
+                  <option value="0">No Entregado</option>
                 </select>
               </div>
 
