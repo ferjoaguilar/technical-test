@@ -13,7 +13,7 @@ export default async(req: NextApiRequest, res: NextApiResponse) => {
       try {
         const [rows, fields] = await connection.execute('SELECT * FROM users WHERE username = ?', [body.username])
         if(!rows[0]) {
-          return res.status(400).json({message: 'Username not found'});  
+          return res.status(400).json({message: 'User or password incorrect'});  
         }
         if(!bcrypt.compareSync(body.password, rows[0].password)) {
           return res.status(400).json({message: 'User or password incorrect'}); 

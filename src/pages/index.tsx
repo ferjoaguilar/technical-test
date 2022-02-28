@@ -27,7 +27,7 @@ const HompePage = () => {
         body: JSON.stringify(data)
       })
       const userData = await res.json()
-      if(userData.message == 'Username not found'){
+      if(userData.message == 'User or password incorrect'){
         setErrorApi(userData.message)
       }
       router.push('/admin')
